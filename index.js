@@ -17,9 +17,9 @@ const newPair = new Keypair();
 const publicKey = new PublicKey(newPair._keypair.publicKey).toString();
 
 // Connect to the Devnet
-const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
+const connection = new Connection("http://127.0.0.1:8899", "confirmed");
 
-console.log("Public Key: ", publicKey);
+console.log("Public Key of the keypair: ", publicKey);
 
 // Get the wallet balance from a given private key
 const getWalletBalance = async () => {
@@ -31,6 +31,10 @@ const getWalletBalance = async () => {
         console.log(err);
     }
 };
+const fromAirDropSignature = await connection.requestAirdrop(
+    new PublicKey(myWallet.publicKey),
+    2 * LAMPORTS_PER_SOL
+);
 
 const airDropSol = async () => {
     try {
